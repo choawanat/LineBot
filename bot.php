@@ -9,8 +9,8 @@
     
     //รับข้อความจากผู้ใช้
     $message = $arrayJson['events'][0]['message']['text'];
-	$userid = $arrayJson['events']['source']['userId'];
-	
+	$userid = $arrayJson['events'][0]['source']['userId'];
+
 #ตัวอย่าง Message Type "Text"
     if($message == "สวัสดี"){
         $arrayPostData['replyToken'] = $arrayJson['events'][0]['replyToken'];
