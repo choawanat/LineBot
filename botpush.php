@@ -7,14 +7,29 @@
     $arrayHeader[] = "Content-Type: application/json";
     $arrayHeader[] = "Authorization: Bearer {$accessToken}";
    
-   //รับ id ของผู้ใช้
-   $id = "U867a27fa07c368f915755ad7d4f3b4bf"; // Meng's line userID
-   for($i=1;$i<=10;$i++){
-	  $arrayPostData['to'] = $id;
-	  $arrayPostData['messages'][0]['type'] = "text";
-	  $arrayPostData['messages'][0]['text'] = "นับ " . $i;
-	  pushMsg($arrayHeader,$arrayPostData);
-   }
+   
+	$userId = "U867a27fa07c368f915755ad7d4f3b4bf"; // Meng's line userID
+	$roomId = "Rd27df3cf18698dc7c17f338b267cefe3" // room id
+	$groupId = "C55ad8b4c9cc5be07b0edade88075c1f3" // group id
+	
+	// to user
+	$arrayPostData['to'] = $userId;
+	$arrayPostData['messages'][0]['type'] = "text";
+	$arrayPostData['messages'][0]['text'] = "Push message to user !!";
+	pushMsg($arrayHeader,$arrayPostData);
+	
+	// to room 
+	$arrayPostData['to'] = $roomId;
+	$arrayPostData['messages'][0]['type'] = "text";
+	$arrayPostData['messages'][0]['text'] = "Push message to room !!";
+	pushMsg($arrayHeader,$arrayPostData);
+	
+	// to group
+	$arrayPostData['to'] = $groupId;
+	$arrayPostData['messages'][0]['type'] = "text";
+	$arrayPostData['messages'][0]['text'] = "Push message to group !!";
+	pushMsg($arrayHeader,$arrayPostData);
+	
 	
 	function pushMsg($arrayHeader,$arrayPostData){
       $strUrl = "https://api.line.me/v2/bot/message/push";
