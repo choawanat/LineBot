@@ -7,15 +7,50 @@
     $arrayHeader[] = "Content-Type: application/json";
     $arrayHeader[] = "Authorization: Bearer {$accessToken}";
     
-    //รับข้อความจากผู้ใช้
-    $message = $arrayJson['events'][0]['message']['text'];
-	$userid = $arrayJson['events'][0]['source']['userId'];
 
-#ตัวอย่าง Message Type "Text"
+    $message = $arrayJson['events'][0]['message']['text'];
+	
+
+	if($message == "check"){
+		$soureType = $arrayJson['events'][0]['source']['type'];
+		
+		if($soureType == "user") {
+			$userId = $arrayJson['events'][0]['source']['userId'];
+
+			$arrayPostData['replyToken'] = $arrayJson['events'][0]['replyToken'];
+			$arrayPostData['messages'][0]['type'] = "text";
+			$arrayPostData['messages'][0]['text'] = " สวัสดีจ้าาา คุณ : <" . $userId . ">";
+			replyMsg($arrayHeader,$arrayPostData);
+		}
+		
+		else if($soureType == "room") {
+			$userId = $arrayJson['events'][0]['source']['userId'];
+			$roomId = $arrayJson['events'][0]['source']['roomId'];
+			
+			$arrayPostData['replyToken'] = $arrayJson['events'][0]['replyToken'];
+			$arrayPostData['messages'][0]['type'] = "text";
+			$arrayPostData['messages'][0]['text'] = " สวัสดีจ้าาา คุณ : <" . $userId . ">";
+			$arrayPostData['messages'][1]['type'] = "text";
+			$arrayPostData['messages'][1]['text'] = "จาก Room <" . $roomId . ">";
+			replyMsg($arrayHeader,$arrayPostData);
+		}
+		else if($soureType == "group") {
+			$userId = $arrayJson['events'][0]['source']['userId'];
+			$groudId = $arrayJson['events'][0]['source']['groupId'];
+			
+			$arrayPostData['replyToken'] = $arrayJson['events'][0]['replyToken'];
+			$arrayPostData['messages'][0]['type'] = "text";
+			$arrayPostData['messages'][0]['text'] = " สวัสดีจ้าาา คุณ : <" . $userId . ">";
+			$arrayPostData['messages'][1]['type'] = "text";
+			$arrayPostData['messages'][1]['text'] = "จาก Group <" . $groudId . ">";
+			replyMsg($arrayHeader,$arrayPostData);
+		}
+		
+	}
     if($message == "สวัสดี"){
         $arrayPostData['replyToken'] = $arrayJson['events'][0]['replyToken'];
         $arrayPostData['messages'][0]['type'] = "text";
-        $arrayPostData['messages'][0]['text'] = " สวัสดีจ้าาา คุณ : <" . $userid . ">";
+        $arrayPostData['messages'][0]['text'] = " สวัสดีจ้าาา ^^";
         replyMsg($arrayHeader,$arrayPostData);
     }
     #ตัวอย่าง Message Type "Sticker"
